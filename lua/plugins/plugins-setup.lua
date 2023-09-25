@@ -1,39 +1,16 @@
-local ensure_packer = function()
-    local fn = vim.fn
-    local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
-    if fn.empty(fn.glob(install_path)) > 0 then
-        fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
-        vim.cmd [[packadd packer.nvim]]
-        return true
-    end
-    return false
-end
-
-local packer_bootstrap = ensure_packer()
-
 return require('packer').startup(function(use)
     use('wbthomason/packer.nvim')
 
     -- Theme
     use('ellisonleao/gruvbox.nvim')
 
-    -- Status-line
-    use {
-        'nvim-lualine/lualine.nvim',
-        requires = { 'kyazdani42/nvim-web-devicons', opt = true }
-    }
-
-    -- Navigation
+    -- Nvim-tree
     use {
         'nvim-tree/nvim-tree.lua',
         requires = {
             'nvim-tree/nvim-web-devicons',
         }
     }
-    use('lewis6991/gitsigns.nvim')
-
-    -- Highlight Telescope will cause nvim slow
-    -- use 'nvim-treesitter/nvim-treesitter'
 
     -- Telescope
     use {
@@ -41,25 +18,32 @@ return require('packer').startup(function(use)
         requires = { {'nvim-lua/plenary.nvim'} }
     }
 
-    -- Mason
-    use('williamboman/mason.nvim')
-    use('williamboman/mason-lspconfig.nvim')
-    use('neovim/nvim-lspconfig')
+    -- Lualine
+    use {
+        'nvim-lualine/lualine.nvim',
+        requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+    }
 
-    -- Rust
-    use('simrat39/rust-tools.nvim')
+    -- Git
+    use('lewis6991/gitsigns.nvim')
 
-    -- Auto completions
-    use('hrsh7th/nvim-cmp')
-    use('hrsh7th/cmp-nvim-lsp')
-    use('hrsh7th/cmp-vsnip')
-    use('hrsh7th/cmp-path')
-    use('hrsh7th/cmp-buffer')
-    use('hrsh7th/vim-vsnip')
-    use('rafamadriz/friendly-snippets')
-    use('saadparwaiz1/cmp_luasnip')
+    -- LSP
+    use {
+        'VonHeikemen/lsp-zero.nvim',
+        branch = 'v3.x',
+        requires = {
+            {'williamboman/mason.nvim'},
+            {'williamboman/mason-lspconfig.nvim'},
 
-    if packer_bootstrap then
-        require('packer').sync()
-    end
+            -- LSP Support
+            {'neovim/nvim-lspconfig'},
+
+            -- Autocompletion
+            {'hrsh7th/nvim-cmp'},
+            {'hrsh7th/cmp-nvim-lsp'},
+            {'L3MON4D3/LuaSnip'},
+        }
+    }
+
 end)
+

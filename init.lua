@@ -2,10 +2,9 @@ require("core.keymaps")
 require("core.options")
 require("plugins/plugins-setup")
 require("plugins/lualine")
-require("plugins/navigation")
+require("plugins/nvim_tree")
 require("plugins/telescope")
 require("plugins/lsp")
-require("plugins/rust-lang")
 
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
