@@ -8,8 +8,8 @@ set("x", "p", "pgvy", opts)
 set("n", "R", "y$pa<CR>", opts)
 
 -- Autocomplete in command line mode
-set("c", "<C-p>", "<Up>", opts)
-set("c", "<C-n>", "<Down>", opts)
+set("c", "<C-p>", "<Up>")
+set("c", "<C-n>", "<Down>")
 
 -- Buffer operations
 set("n", "<C-p>", ":bp<CR>", opts)

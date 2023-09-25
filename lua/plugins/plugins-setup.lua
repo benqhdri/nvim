@@ -32,8 +32,8 @@ return require('packer').startup(function(use)
     }
     use('lewis6991/gitsigns.nvim')
 
-    -- Highlight
-    use 'nvim-treesitter/nvim-treesitter'
+    -- Highlight Telescope will cause nvim slow
+    -- use 'nvim-treesitter/nvim-treesitter'
 
     -- Telescope
     use {
