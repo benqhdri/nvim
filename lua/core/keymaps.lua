@@ -39,4 +39,3 @@ set("t", "Q", ":only<CR>", opts)
 set("n", "<Esc>", "<Esc>:nohlsearch<CR>", opts)
 set("v", "<Esc>", "<Esc>:nohlsearch<CR>", opts)
 set("i", "<Esc>", "<Esc>:nohlsearch<CR>", opts)
-

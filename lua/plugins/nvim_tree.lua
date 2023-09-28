@@ -7,13 +7,12 @@ local function opts(desc)
     return { desc = "nvim-tree: " .. desc, noremap = true, silent = true, nowait = true }
 end
 
-vim.keymap.set('n', '<tab>', api.tree.toggle,       opts('Toggle'))
+vim.keymap.set('n', '<tab>', api.tree.toggle, opts('Toggle'))
 vim.keymap.set('n', '<C-f>', function()
-    return api.tree.toggle({ find_file = true, focus = true , update_root = true })
+    return api.tree.toggle({ find_file = true, focus = true, update_root = true })
 end, opts("Find file"))
 
 local function my_on_attach(bufnr)
-
     -- default mappings
     api.config.mappings.default_on_attach(bufnr)
 
@@ -44,6 +43,4 @@ require("nvim-tree").setup {
         },
     }
 }
-
-require("gitsigns").setup()
 

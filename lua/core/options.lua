@@ -20,12 +20,12 @@ opt.foldmethod = "indent"
 opt.ignorecase = true
 opt.smartcase = true
 
-opt.wildmode = {"longest", "list"}
+opt.wildmode = { "longest", "list" }
 
 opt.history = 8192
 opt.laststatus = 2
 opt.hidden = true
-opt.fileencodings = {"utf-8", "gb18030"}
+opt.fileencodings = { "utf-8", "gb18030" }
 
 opt.background = "dark"
 vim.cmd([[colorscheme gruvbox]])
