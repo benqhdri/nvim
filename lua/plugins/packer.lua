@@ -29,19 +29,18 @@ return require('packer').startup(function(use)
 
     -- LSP
     use {
-        'VonHeikemen/lsp-zero.nvim',
-        branch = 'v3.x',
+        'neovim/nvim-lspconfig',
         requires = {
+            -- Package manage
             { 'williamboman/mason.nvim' },
             { 'williamboman/mason-lspconfig.nvim' },
-
-            -- LSP Support
-            { 'neovim/nvim-lspconfig' },
-
             -- Autocompletion
             { 'hrsh7th/nvim-cmp' },
             { 'hrsh7th/cmp-nvim-lsp' },
             { 'L3MON4D3/LuaSnip' },
+            -- Formatter
+            { 'jay-babu/mason-null-ls.nvim' },
+            { 'jose-elias-alvarez/null-ls.nvim' }
         }
     }
 end)

@@ -1,11 +1,12 @@
 require("core.keymaps")
 require("core.options")
-require("plugins/plugins-setup")
+require("plugins/packer")
 require("plugins/lualine")
 require("plugins/nvim_tree")
 require("plugins/telescope")
-require("plugins/lsp")
+require("plugins/lspconfig")
 require("plugins/gitsigns")
+require("plugins/mason")
 
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
