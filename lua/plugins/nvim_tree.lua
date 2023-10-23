@@ -41,6 +41,8 @@ require("nvim-tree").setup {
         change_dir = {
             global = true,
         },
+    },
+    view = {
+        preserve_window_proportions = true,
     }
 }
-

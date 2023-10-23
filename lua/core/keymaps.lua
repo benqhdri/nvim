@@ -15,7 +15,7 @@ set("c", "<C-n>", "<Down>")
 set("n", "<C-p>", ":bp<CR>", opts)
 set("n", "<C-n>", ":bn<CR>", opts)
 set("n", "<leader>q", ":bp<bar>sp<bar>bn<bar>bd<CR>", opts)
-set("n", "<leader>Q", "[[:%bd|e#<CR>]]", opts)
+set("n", "<leader>Q", "[[:%bd|e#|bd#<CR>]]", opts)
 
 -- Windows operations
 set("n", "<C-h>", "<C-w>h", opts)
