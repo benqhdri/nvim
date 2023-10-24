@@ -1,16 +1,36 @@
-local builtin = require('telescope.builtin')
-vim.keymap.set('n', '<leader>f', builtin.find_files, {})
-vim.keymap.set('n', '<leader>s', builtin.live_grep, {})
-vim.keymap.set('n', '<leader>w', builtin.grep_string, {})
-vim.keymap.set('n', '<leader>d', builtin.buffers, {})
-vim.keymap.set('n', '<leader>h', builtin.help_tags, {})
-vim.keymap.set('n', '<leader>p', builtin.pickers, {})
-vim.keymap.set('n', '<leader>o', builtin.git_status, {})
-vim.keymap.set('n', '<leader>k', builtin.keymaps, {})
+function vim.getVisualSelection()
+    vim.cmd('noau normal! "vy"')
+    local text = vim.fn.getreg('v')
+    vim.fn.setreg('v', {})
 
+    text = string.gsub(text, "\n", "")
+    if #text > 0 then
+        return text
+    else
+        return ''
+    end
+end
+
+local builtin = require('telescope.builtin')
 local telescope_custom_actions = {}
 local actions = require('telescope.actions')
 local action_state = require("telescope.actions.state")
+local keymap = vim.keymap.set
+local opts = { noremap = true, silent = true }
+
+keymap('n', '<leader>f', builtin.find_files, {})
+keymap('n', '<leader>s', builtin.live_grep, {})
+keymap('v', '<space>s', function()
+    local text = vim.getVisualSelection()
+    builtin.live_grep({ default_text = text })
+end, opts)
+keymap('n', '<leader>w', builtin.grep_string, {})
+keymap('n', '<leader>d', builtin.buffers, {})
+keymap('n', '<leader>h', builtin.help_tags, {})
+keymap('n', '<leader>p', builtin.pickers, {})
+keymap('n', '<leader>o', builtin.git_status, {})
+keymap('n', '<leader>k', builtin.keymaps, {})
+
 
 function telescope_custom_actions._multiopen(prompt_bufnr, open_cmd)
     local picker = action_state.get_current_picker(prompt_bufnr)
@@ -36,6 +56,18 @@ function telescope_custom_actions.multi_selection_open(prompt_bufnr)
 end
 
 require('telescope').setup({
+    pickers = {
+        find_files = {
+            initial_mode = "insert",
+        },
+        buffers = {
+            mappings = {
+                n = {
+                    ["d"] = actions.delete_buffer,
+                }
+            }
+        },
+    },
     defaults = {
         cache_picker = {
             num_pickers = 30
@@ -45,13 +77,32 @@ require('telescope').setup({
                 preview_cutoff = 0,
             },
         },
-
+        initial_mode = "normal",
         mappings = {
             i = {
-                ["<ESC>"] = actions.close,
                 ["<C-x>"] = actions.delete_buffer,
                 ["<C-j>"] = actions.move_selection_next,
                 ["<C-k>"] = actions.move_selection_previous,
+                ["<C-u>"] = actions.preview_scrolling_up,
+                ["<C-d>"] = actions.preview_scrolling_down,
+                ["<leader>a"] = actions.select_all,
+                ["<TAB>"] = actions.toggle_selection + actions.move_selection_next,
+                ["<S-TAB>"] = actions.toggle_selection + actions.move_selection_previous,
+                ["<enter>"] = telescope_custom_actions.multi_selection_open,
+                ["<C-n>"] = require('telescope.actions').cycle_history_next,
+                ["<C-p>"] = require('telescope.actions').cycle_history_prev,
+            },
+            n = {
+                ["<ESC>"] = actions.close,
+                ["j"] = actions.move_selection_next,
+                ["k"] = actions.move_selection_previous,
+                ["o"] = actions.file_edit,
+                ["s"] = actions.file_split,
+                ["v"] = actions.file_vsplit,
+                ["u"] = actions.results_scrolling_up,
+                ["d"] = actions.results_scrolling_down,
+                ["<C-u>"] = actions.preview_scrolling_up,
+                ["<C-d>"] = actions.preview_scrolling_down,
                 ["<leader>a"] = actions.select_all,
                 ["<TAB>"] = actions.toggle_selection + actions.move_selection_next,
                 ["<S-TAB>"] = actions.toggle_selection + actions.move_selection_previous,
@@ -60,36 +111,5 @@ require('telescope').setup({
                 ["<C-p>"] = require('telescope.actions').cycle_history_prev,
             },
         },
-
     }
 })
-
--- require("telescope").setup({
---     defaults = {
---         cache_picker = {
---             num_pickers = 30
---         },
---         layout_config = {
---             horizontal = {
---                 preview_cutoff = 0,
---             },
---         },
---
---         mappings = {
---             n = {
---                 ["o"] = "file_edit",
---                 ["v"] = "select_vertical",
---                 ["<C-u>"] = "results_scrolling_up",
---                 ["<C-d>"] = "results_scrolling_down",
---                 ["d"] = "delete_buffer",
---                 ["<C-a>"] = "select_all",
---                 ["<Esc>"] = "drop_all",
---             },
---             i = {
---                 ["<C-a>"] = "toggle_all",
---                 ["<C-u>"] = "results_scrolling_up",
---                 ["<C-d>"] = "results_scrolling_down",
---             },
---         },
---     },
--- })
