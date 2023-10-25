@@ -11,6 +11,15 @@ set("n", "R", "y$pa<CR>", opts)
 set("c", "<C-p>", "<Up>")
 set("c", "<C-n>", "<Down>")
 
+-- Map H and L to ^ and $h(skip the extra space on the end)
+-- Map with normal mode, operator-pending mode and visual mode
+set("n", "H", "^")
+set("o", "H", "^")
+set("x", "H", "^")
+set("n", "L", "$h")
+set("o", "L", "$h")
+set("x", "L", "$h")
+
 -- Buffer operations
 set("n", "<C-p>", ":bp<CR>", opts)
 set("n", "<C-n>", ":bn<CR>", opts)

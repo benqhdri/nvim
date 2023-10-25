@@ -10,3 +10,9 @@ require("toggleterm").setup({
     hide_numbers = false,
 }
 )
+
+local set = vim.keymap.set
+local opts = { noremap = true, silent = true, nowait = true }
+
+set('x', '<CR>', [[:'<,'>ToggleTermSendVisualSelection<CR>]], opts)
+set('n', '<S-Enter>', [[:ToggleTermSendCurrentLine<CR>]], opts)

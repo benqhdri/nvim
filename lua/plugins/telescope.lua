@@ -57,10 +57,8 @@ end
 
 require('telescope').setup({
     pickers = {
-        find_files = {
-            initial_mode = "insert",
-        },
         buffers = {
+            initial_mode = "normal",
             mappings = {
                 n = {
                     ["d"] = actions.delete_buffer,
@@ -77,7 +75,7 @@ require('telescope').setup({
                 preview_cutoff = 0,
             },
         },
-        initial_mode = "normal",
+        initial_mode = "insert",
         mappings = {
             i = {
                 ["<C-x>"] = actions.delete_buffer,
