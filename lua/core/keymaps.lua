@@ -41,8 +41,6 @@ set("i", "<C-k>", "<C-\\><C-N><C-w>k", opts)
 set("i", "<C-l>", "<C-\\><C-N><C-w>l", opts)
 set("n", "<C-c>", "<C-w>c", opts)
 set("n", "<A-c>", ":vs#<CR>", opts)
-set("n", "Q", ":only<CR>", opts)
-set("t", "Q", ":only<CR>", opts)
 
 -- No highlight
 set("n", "<Esc>", "<Esc>:nohlsearch<CR>", opts)

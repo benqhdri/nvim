@@ -12,9 +12,7 @@ function vim.getVisualSelection()
 end
 
 local builtin = require('telescope.builtin')
-local telescope_custom_actions = {}
 local actions = require('telescope.actions')
-local action_state = require("telescope.actions.state")
 local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
@@ -30,30 +28,8 @@ keymap('n', '<leader>h', builtin.help_tags, {})
 keymap('n', '<leader>p', builtin.pickers, {})
 keymap('n', '<leader>o', builtin.git_status, {})
 keymap('n', '<leader>k', builtin.keymaps, {})
-
-
-function telescope_custom_actions._multiopen(prompt_bufnr, open_cmd)
-    local picker = action_state.get_current_picker(prompt_bufnr)
-    local selected_entry = action_state.get_selected_entry()
-    local num_selections = #picker:get_multi_selection()
-    if not num_selections or num_selections <= 1 then
-        actions.add_selection(prompt_bufnr)
-    end
-    actions.send_selected_to_qflist(prompt_bufnr)
-    vim.cmd("cfdo " .. open_cmd)
-end
-
-function telescope_custom_actions.multi_selection_open_vsplit(prompt_bufnr)
-    telescope_custom_actions._multiopen(prompt_bufnr, "vsplit")
-end
-
-function telescope_custom_actions.multi_selection_open_split(prompt_bufnr)
-    telescope_custom_actions._multiopen(prompt_bufnr, "split")
-end
-
-function telescope_custom_actions.multi_selection_open(prompt_bufnr)
-    telescope_custom_actions._multiopen(prompt_bufnr, "edit")
-end
+keymap('n', '<leader>m', builtin.man_pages, {})
+keymap('n', '<leader>c', builtin.git_bcommits, {})
 
 require('telescope').setup({
     pickers = {
@@ -64,6 +40,9 @@ require('telescope').setup({
                     ["d"] = actions.delete_buffer,
                 }
             }
+        },
+        git_bcommits = {
+            initial_mode = "normal",
         },
     },
     defaults = {
@@ -81,12 +60,9 @@ require('telescope').setup({
                 ["<C-x>"] = actions.delete_buffer,
                 ["<C-j>"] = actions.move_selection_next,
                 ["<C-k>"] = actions.move_selection_previous,
-                ["<C-u>"] = actions.preview_scrolling_up,
-                ["<C-d>"] = actions.preview_scrolling_down,
-                ["<leader>a"] = actions.select_all,
+                ["<C-a>"] = actions.select_all,
                 ["<TAB>"] = actions.toggle_selection + actions.move_selection_next,
                 ["<S-TAB>"] = actions.toggle_selection + actions.move_selection_previous,
-                ["<enter>"] = telescope_custom_actions.multi_selection_open,
                 ["<C-n>"] = require('telescope.actions').cycle_history_next,
                 ["<C-p>"] = require('telescope.actions').cycle_history_prev,
             },
@@ -97,14 +73,11 @@ require('telescope').setup({
                 ["o"] = actions.file_edit,
                 ["s"] = actions.file_split,
                 ["v"] = actions.file_vsplit,
-                ["u"] = actions.results_scrolling_up,
-                ["d"] = actions.results_scrolling_down,
                 ["<C-u>"] = actions.preview_scrolling_up,
                 ["<C-d>"] = actions.preview_scrolling_down,
-                ["<leader>a"] = actions.select_all,
+                ["<C-a>"] = actions.select_all,
                 ["<TAB>"] = actions.toggle_selection + actions.move_selection_next,
                 ["<S-TAB>"] = actions.toggle_selection + actions.move_selection_previous,
-                ["<enter>"] = telescope_custom_actions.multi_selection_open,
                 ["<C-n>"] = require('telescope.actions').cycle_history_next,
                 ["<C-p>"] = require('telescope.actions').cycle_history_prev,
             },
