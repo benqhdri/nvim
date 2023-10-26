@@ -27,7 +27,7 @@ keymap('n', '<leader>d', builtin.buffers, {})
 keymap('n', '<leader>h', builtin.help_tags, {})
 keymap('n', '<leader>p', builtin.pickers, {})
 keymap('n', '<leader>o', builtin.git_status, {})
-keymap('n', '<leader>k', builtin.keymaps, {})
+keymap('n', '<leader>K', builtin.keymaps, {})
 keymap('n', '<leader>m', builtin.man_pages, {})
 keymap('n', '<leader>c', builtin.git_bcommits, {})
 
@@ -42,6 +42,9 @@ require('telescope').setup({
             }
         },
         git_bcommits = {
+            initial_mode = "normal",
+        },
+        git_status = {
             initial_mode = "normal",
         },
     },

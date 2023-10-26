@@ -8,6 +8,8 @@ local function opts(desc)
 end
 
 vim.keymap.set('n', '<C-;>', api.tree.toggle, opts('Toggle'))
+vim.keymap.set('t', '<C-;>', api.tree.toggle, opts('Toggle'))
+vim.keymap.set('x', '<C-;>', api.tree.toggle, opts('Toggle'))
 vim.keymap.set('n', '<C-f>', function()
     return api.tree.toggle({ find_file = true, focus = true, update_root = true })
 end, opts("Find file"))

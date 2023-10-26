@@ -24,11 +24,11 @@ return require('packer').startup(function(use)
         requires = { 'kyazdani42/nvim-web-devicons', opt = true }
     }
 
+    -- Harpoon
+    use("ThePrimeagen/harpoon")
+
     -- Git
     use('lewis6991/gitsigns.nvim')
-
-    -- Terminal
-    use("akinsho/toggleterm.nvim")
 
     -- LSP
     use {
