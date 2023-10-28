@@ -16,15 +16,14 @@ set("c", "<C-n>", "<Down>")
 set("n", "H", "^")
 set("o", "H", "^")
 set("x", "H", "^")
-set("n", "L", "$h")
+set("n", "L", "$")
 set("o", "L", "$h")
 set("x", "L", "$h")
 
 -- Buffer operations
-set("n", "<C-p>", ":bp<CR>", opts)
-set("n", "<C-n>", ":bn<CR>", opts)
+set("n", "<C-n>", ":bp<CR>", opts)
+set("n", "<C-p>", ":bn<CR>", opts)
 set("n", "<leader>q", ":bp<bar>sp<bar>bn<bar>bd<CR>", opts)
-set("n", "<leader>Q", "[[:%bd|e#|bd#<CR>]]", opts)
 
 -- Windows operations
 set("n", "<C-h>", "<C-w>h", opts)

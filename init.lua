@@ -8,7 +8,9 @@ require("plugins/lspconfig")
 require("plugins/gitsigns")
 require("plugins/mason")
 require("plugins/gruvbox")
+require("plugins/align")
 require("plugins/harpoon")
+require("plugins/bufferline")
 
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd

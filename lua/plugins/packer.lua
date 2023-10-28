@@ -30,6 +30,12 @@ return require('packer').startup(function(use)
     -- Git
     use('lewis6991/gitsigns.nvim')
 
+    -- Align
+    use('echasnovski/mini.align')
+
+    -- BufferLine
+    use { 'akinsho/bufferline.nvim', tag = "*", requires = 'nvim-tree/nvim-web-devicons' }
+
     -- LSP
     use {
         'neovim/nvim-lspconfig',
