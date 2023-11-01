@@ -1,5 +1,5 @@
 require("gruvbox").setup({
-    terminal_colors = true, -- add neovim terminal colors
+    terminal_colors = false, -- fix git diff not show properly
     undercurl = true,
     underline = true,
     bold = true,

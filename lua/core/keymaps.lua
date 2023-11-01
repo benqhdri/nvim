@@ -20,11 +20,6 @@ set("n", "L", "$")
 set("o", "L", "$h")
 set("x", "L", "$h")
 
--- Buffer operations
-set("n", "<C-n>", ":bp<CR>", opts)
-set("n", "<C-p>", ":bn<CR>", opts)
-set("n", "<leader>q", ":bp<bar>sp<bar>bn<bar>bd<CR>", opts)
-
 -- Windows operations
 set("n", "<C-h>", "<C-w>h", opts)
 set("n", "<C-j>", "<C-w>j", opts)
