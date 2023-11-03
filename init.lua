@@ -1,21 +1,11 @@
 require("core.keymaps")
 require("core.options")
+require("core.autocmds")
 
-local augroup = vim.api.nvim_create_augroup
-local autocmd = vim.api.nvim_create_autocmd
-local auto_write = augroup('AutoWrite', {})
 local set = vim.keymap.set
 local del = vim.keymap.del
 local opts = { noremap = true, silent = true, nowait = true }
 local all_mods = { "n", "t", "v", "i" }
-
-autocmd({ 'TextChanged', 'TextChangedI' }, {
-    group = auto_write,
-    pattern = '*.*',
-    callback = function()
-        vim.cmd('silent write')
-    end,
-})
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -152,7 +142,7 @@ require("lazy").setup({
             set('n', '<leader>d', builtin.buffers, {})
             set('n', '<leader>h', builtin.help_tags, {})
             set('n', '<leader>o', builtin.git_status, {})
-            set('n', '<leader>K', builtin.keymaps, {})
+            set('n', '<leader>k', builtin.keymaps, {})
             set('n', '<leader>M', builtin.man_pages, {})
             set('n', '<leader>m', builtin.marks, {})
             set('n', '<leader>c', builtin.git_bcommits, {})
@@ -229,7 +219,6 @@ require("lazy").setup({
     },
     {
         'nvim-lualine/lualine.nvim',
-        dependencies = { 'kyazdani42/nvim-web-devicons' },
         config = function()
             require('lualine').setup()
         end,
@@ -382,7 +371,19 @@ require("lazy").setup({
         'ThePrimeagen/harpoon',
         config = function()
             local term = require("harpoon.term")
-            set("n", "<leader>;", function() term.gotoTerminal(1) end)
+            set("n", "<C-\\>", function() term.gotoTerminal(1) end)
         end
     },
+    {
+        "FabijanZulj/blame.nvim",
+        config = function()
+            require('blame').setup({
+                date_format = "%Y/%m/%d",
+            })
+            set("n", "t", function()
+                vim.cmd("ToggleBlame")
+                vim.opt.cursorline = false
+            end, opts)
+        end,
+    }
 })

@@ -6,6 +6,7 @@ opt.nu = true
 opt.rnu = true
 opt.linebreak = true
 opt.scrolloff = 10
+opt.scrollback = 100000
 
 opt.mouse:append("nv")
 opt.clipboard:append("unnamedplus")
@@ -28,3 +29,5 @@ opt.hidden = true
 opt.fileencodings = { "utf-8", "gb18030" }
 
 opt.background = "dark"
+
+vim.env.WORK_DIR = vim.fn.expand('%:p:h')
