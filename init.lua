@@ -6,6 +6,7 @@ local set = vim.keymap.set
 local del = vim.keymap.del
 local opts = { noremap = true, silent = true, nowait = true }
 local all_mods = { "n", "t", "v", "i" }
+vim.opt.termguicolors = true
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -36,7 +37,6 @@ require("lazy").setup({
         config = function()
             vim.g.loaded_netrw = 1
             vim.g.loaded_netrwPlugin = 1
-            vim.opt.termguicolors = true
 
             local api = require("nvim-tree.api")
 
@@ -220,7 +220,16 @@ require("lazy").setup({
     {
         'nvim-lualine/lualine.nvim',
         config = function()
-            require('lualine').setup()
+            require('lualine').setup({
+                sections = {
+                    lualine_b = {
+                        {
+                            'branch',
+                            color = { fg = '#ff5f5f' },
+                        },
+                    },
+                },
+            })
         end,
     },
     {
@@ -385,5 +394,11 @@ require("lazy").setup({
                 vim.opt.cursorline = false
             end, opts)
         end,
-    }
+    },
+    {
+        'norcalli/nvim-colorizer.lua',
+        config = function()
+            require('colorizer').setup()
+        end,
+    },
 })
