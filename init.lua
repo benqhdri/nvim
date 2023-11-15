@@ -186,8 +186,11 @@ require("lazy").setup({
                             ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
                             ["<C-k>"] = actions.move_selection_previous,
                             ["<C-a>"] = actions.select_all,
-                            ["<C-u>"] = actions.move_selection_previous + actions.move_selection_previous + actions.move_selection_previous + actions.move_selection_previous + actions.move_selection_previous,
-                            ["<C-d>"] = actions.move_selection_next + actions.move_selection_next + actions.move_selection_next + actions.move_selection_next + actions.move_selection_next,
+                            ["<C-u>"] = actions.move_selection_previous + actions.move_selection_previous +
+                                actions.move_selection_previous + actions.move_selection_previous +
+                                actions.move_selection_previous,
+                            ["<C-d>"] = actions.move_selection_next + actions.move_selection_next +
+                                actions.move_selection_next + actions.move_selection_next + actions.move_selection_next,
                             ["<TAB>"] = actions.toggle_selection + actions.move_selection_next,
                             ["<S-TAB>"] = actions.toggle_selection + actions.move_selection_previous,
                             ["<C-n>"] = require('telescope.actions').cycle_history_next,
@@ -201,8 +204,11 @@ require("lazy").setup({
                             ["o"] = actions.file_edit,
                             ["s"] = actions.file_split,
                             ["v"] = actions.file_vsplit,
-                            ["u"] = actions.move_selection_previous + actions.move_selection_previous + actions.move_selection_previous + actions.move_selection_previous + actions.move_selection_previous,
-                            ["d"] = actions.move_selection_next + actions.move_selection_next + actions.move_selection_next + actions.move_selection_next + actions.move_selection_next,
+                            ["u"] = actions.move_selection_previous + actions.move_selection_previous +
+                                actions.move_selection_previous + actions.move_selection_previous +
+                                actions.move_selection_previous,
+                            ["d"] = actions.move_selection_next + actions.move_selection_next +
+                                actions.move_selection_next + actions.move_selection_next + actions.move_selection_next,
                             ["<C-u>"] = actions.preview_scrolling_up,
                             ["<C-d>"] = actions.preview_scrolling_down,
                             ["<C-a>"] = actions.select_all,
@@ -296,7 +302,7 @@ require("lazy").setup({
             require('mason').setup({})
 
             require('mason-lspconfig').setup({
-                ensure_installed = { "pylsp", "lua_ls", "rust_analyzer", "clangd" },
+                ensure_installed = { "pyright", "lua_ls", "rust_analyzer", "clangd" },
             })
 
             require("mason-null-ls").setup({
@@ -332,7 +338,9 @@ require("lazy").setup({
             lspconfig.rust_analyzer.setup {
                 -- Server-specific settings. See `:help lspconfig-setup`
                 settings = {
-                    ['rust-analyzer'] = {},
+                    ['rust-analyzer'] = {
+                        cargo = { allFeatures = true }
+                    },
                 },
             }
 
@@ -381,6 +389,7 @@ require("lazy").setup({
         config = function()
             local term = require("harpoon.term")
             set("n", "<C-\\>", function() term.gotoTerminal(1) end)
+            set("n", "<C-/>", function() term.gotoTerminal(2) end)
         end
     },
     {

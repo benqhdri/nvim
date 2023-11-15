@@ -31,3 +31,18 @@ autocmd({ 'BufWinLeave', 'WinLeave' }, {
         vim.cmd('stopinsert')
     end,
 })
+
+autocmd({ 'BufEnter' }, {
+    pattern = 'NvimTree*',
+    callback = function()
+        vim.cmd('stopinsert')
+    end,
+})
+
+-- Bypass ass file slow problem
+autocmd({ 'BufEnter' }, {
+    pattern = '*.ass',
+    callback = function()
+        vim.opt_local.syntax = "off"
+    end,
+})
