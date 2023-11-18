@@ -302,11 +302,11 @@ require("lazy").setup({
             require('mason').setup({})
 
             require('mason-lspconfig').setup({
-                ensure_installed = { "pyright", "lua_ls", "rust_analyzer", "clangd" },
+                ensure_installed = { "pyright", "lua_ls", "rust_analyzer", "clangd", "bashls" },
             })
 
             require("mason-null-ls").setup({
-                ensure_installed = { "black" }
+                ensure_installed = { "black", "jq", "beautysh" }
             })
 
             local null_ls = require("null-ls")
@@ -314,6 +314,10 @@ require("lazy").setup({
             null_ls.setup({
                 sources = {
                     null_ls.builtins.formatting.black,
+                    null_ls.builtins.formatting.beautysh,
+                    null_ls.builtins.formatting.jq.with({
+                        extra_args = { "--indent", "4" }
+                    }),
                 },
             })
             local lspconfig = require('lspconfig')
@@ -321,6 +325,7 @@ require("lazy").setup({
             lspconfig.pyright.setup {}
             lspconfig.tsserver.setup {}
             lspconfig.clangd.setup {}
+            lspconfig.bashls.setup {}
 
             -- Lua
             lspconfig.lua_ls.setup {
