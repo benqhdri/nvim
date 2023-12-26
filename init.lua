@@ -23,16 +23,6 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
     {
-        'ellisonleao/gruvbox.nvim',
-        config = function()
-            require("gruvbox").setup({
-                terminal_colors = false, -- fix git diff not show properly
-                contrast = "hard",       -- can be "hard", "soft" or empty string
-            })
-            vim.cmd([[colorscheme gruvbox]])
-        end
-    },
-    {
         'nvim-tree/nvim-tree.lua',
         config = function()
             vim.g.loaded_netrw = 1
@@ -146,6 +136,9 @@ require("lazy").setup({
             set('n', '<leader>M', builtin.man_pages, {})
             set('n', '<leader>m', builtin.marks, {})
             set('n', '<leader>c', builtin.git_bcommits, {})
+            set('n', '<leader>ls', builtin.lsp_document_symbols, {})
+            set('n', '<leader>lS', builtin.lsp_workspace_symbols, {})
+            set('n', 'gr', builtin.lsp_references, {})
 
             require('telescope').setup({
                 pickers = {
@@ -166,6 +159,9 @@ require("lazy").setup({
                         initial_mode = "normal",
                     },
                     marks = {
+                        initial_mode = "normal",
+                    },
+                    lsp_references = {
                         initial_mode = "normal",
                     },
                 },
@@ -227,11 +223,14 @@ require("lazy").setup({
         'nvim-lualine/lualine.nvim',
         config = function()
             require('lualine').setup({
+                options = {
+                    theme = "onelight"
+                },
                 sections = {
                     lualine_b = {
                         {
                             'branch',
-                            color = { fg = '#ff5f5f' },
+                            color = { fg = '#af0000' },
                         },
                     },
                 },
@@ -293,7 +292,6 @@ require("lazy").setup({
             -- Autocompletion
             { 'hrsh7th/nvim-cmp' },
             { 'hrsh7th/cmp-nvim-lsp' },
-            { 'L3MON4D3/LuaSnip' },
             -- Formatter
             { 'jay-babu/mason-null-ls.nvim' },
             { 'jose-elias-alvarez/null-ls.nvim' }
@@ -310,7 +308,6 @@ require("lazy").setup({
             })
 
             local null_ls = require("null-ls")
-
             null_ls.setup({
                 sources = {
                     null_ls.builtins.formatting.black,
@@ -320,8 +317,8 @@ require("lazy").setup({
                     }),
                 },
             })
-            local lspconfig = require('lspconfig')
 
+            local lspconfig = require('lspconfig')
             lspconfig.pyright.setup {}
             lspconfig.tsserver.setup {}
             lspconfig.clangd.setup {}
@@ -349,39 +346,29 @@ require("lazy").setup({
                 },
             }
 
-
-            -- Global mappings.
-            -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-            set('n', '<space>e', vim.diagnostic.open_float)
+            -- Diagnostics
+            set('n', '<F4>', function()
+                if vim.diagnostic.is_disabled() then
+                    vim.diagnostic.enable()
+                else
+                    vim.diagnostic.disable()
+                end
+            end)
             set('n', '[d', vim.diagnostic.goto_prev)
             set('n', ']d', vim.diagnostic.goto_next)
-            -- set('n', '<space>q', vim.diagnostic.setloclist)
 
-            -- Use LspAttach autocommand to only map the following keys
-            -- after the language server attaches to the current buffer
+            -- Lsp mappings
             vim.api.nvim_create_autocmd('LspAttach', {
                 group = vim.api.nvim_create_augroup('UserLspConfig', {}),
                 callback = function(ev)
-                    -- Enable completion triggered by <c-x><c-o>
-                    vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+                    -- Disable lsp to change code color
+                    local client = vim.lsp.get_client_by_id(ev.data.client_id)
+                    client.server_capabilities.semanticTokensProvider = nil
 
-                    -- Buffer local mappings.
-                    -- See `:help vim.lsp.*` for documentation on any of the below functions
                     local opts = { buffer = ev.buf }
-                    set('n', 'gD', vim.lsp.buf.declaration, opts)
                     set('n', 'gd', vim.lsp.buf.definition, opts)
-                    set('n', 'K', vim.lsp.buf.hover, opts)
-                    set('n', 'gi', vim.lsp.buf.implementation, opts)
-                    -- vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
-                    set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
-                    set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
-                    set('n', '<space>wl', function()
-                        print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-                    end, opts)
-                    set('n', '<space>D', vim.lsp.buf.type_definition, opts)
-                    set('n', '<space>rn', vim.lsp.buf.rename, opts)
-                    set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
-                    set('n', 'gr', vim.lsp.buf.references, opts)
+                    set('n', '<leader>lk', vim.lsp.buf.hover, opts)
+                    set('n', '<leader>la', vim.lsp.buf.code_action, opts)
                     set('n', '<leader>lf', function()
                         vim.lsp.buf.format { async = true }
                     end, opts)

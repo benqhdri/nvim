@@ -1,5 +1,7 @@
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
+-- only for current buffer
+local opts = { noremap = true, silent = true, nowait = true, buffer = true }
 local auto_write = augroup('AutoWrite', {})
 
 autocmd({ 'TextChanged', 'TextChangedI' }, {
@@ -15,6 +17,7 @@ autocmd({ 'TermOpen' }, {
         vim.opt_local.foldmethod = "manual"
         vim.opt_local.buflisted = false
         vim.cmd('startinsert')
+        vim.keymap.set({ "n", "v" }, "<C-\\>", "<C-\\><C-N>:b#<CR>", opts)
     end,
 })
 
