@@ -96,8 +96,16 @@ require("lazy").setup({
             set(all_mods, "<M-J>", function() bl.move(-1) end, opts)
             set(all_mods, "<M-K>", function() bl.move(1) end, opts)
             set(all_mods, "<M-P>", function() groups.toggle_pin() end, opts)
-            set({ "n", "v" }, "<leader>q", function() bl.unpin_and_close() end, opts)
-            set({ "n", "v" }, "<leader>Q", function() bl.close_others() end, opts)
+        end
+    },
+    {
+        'ojroques/nvim-bufdel',
+        config = function()
+            require("bufdel").setup {
+                quit = false,
+            }
+            set({ "n", "v" }, "<leader>q", ":BufDel<CR>", opts)
+            set({ "n", "v" }, "<leader>Q", ":BufDelOthers<CR>", opts)
         end
     },
     {
